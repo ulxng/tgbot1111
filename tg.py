@@ -25,12 +25,11 @@ def send_me_message(message):
     print(f"Обработана команда /me от пользователя ID: {message.from_user.id}")
 
 
-print("Бот запущен.")
-
-
 def main():
     bot.polling(none_stop=True, interval=1)
 
 
 if __name__ == "__main__":
     main()
+
+print("Бот запущен.")
