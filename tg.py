@@ -1,33 +1,28 @@
 import telebot
 
-# САМОЕ ГЛАВНОЕ: Замените этот токен на ваш реальный токен, полученный от @BotFather
-# Убедитесь, что он скопирован полностью и без лишних символов.
-BOT_TOKEN = (
-    "7966123957:AAHd89O9laVRJ8HCQ9sKSnoBF-FqiRYYuOQ"  # <-- Проверьте этот токен!
-)
+
+BOT_TOKEN = "7966123957:AAHd89O9laVRJ8HCQ9sKSnoBF-FqiRYYuOQ"
 
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
+if __name__ == "__main__":
 
-@bot.message_handler(commands=["start"])
-def send_start_message(message):
-    bot.reply_to(message, "Hello world!")
-    print(f"Обработана команда /start от пользователя ID: {message.from_user.id}")
+    @bot.message_handler(commands=["start"])
+    def send_start_message(message):
+        bot.reply_to(message, "Hello world!")
+        print(f"Обработана команда /start от пользователя ID: {message.from_user.id}")
 
+    @bot.message_handler(commands=["help"])
+    def send_help_message(message):
+        bot.reply_to(message, "Тебе тут никто не поможет.")
+        print(f"Обработана команда /help от пользователя ID: {message.from_user.id}")
 
-@bot.message_handler(commands=["help"])
-def send_help_message(message):
-    bot.reply_to(message, "Тебе тут никто не поможет.")
-    print(f"Обработана команда /help от пользователя ID: {message.from_user.id}")
+    @bot.message_handler(commands=["me"])
+    def send_me_message(message):
+        bot.reply_to(message, {message.from_user.id})
+        print(f"Обработана команда /me от пользователя ID: {message.from_user.id}")
 
+    print("Бот запущен.")
 
-@bot.message_handler(commands=["me"])
-def send_me_message(message):
-    bot.reply_to(message, {message.from_user.id})
-    print(f"Обработана команда /me от пользователя ID: {message.from_user.id}")
-
-
-print("Бот запущен.")
-
-bot.polling(none_stop=True, interval=1)
+    bot.polling(none_stop=True, interval=1)
