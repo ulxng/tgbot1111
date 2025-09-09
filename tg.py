@@ -1,7 +1,10 @@
-import telebot
+import telebot 
+import os
+from dotenv import load_dotenv
 
+load_dotenv('tg.env')
 
-BOT_TOKEN = "7966123957:AAHd89O9laVRJ8HCQ9sKSnoBF-FqiRYYuOQ"
+BOT_TOKEN = os.getenv("BOT_TOKEN") 
 
 
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -31,5 +34,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 print("Бот запущен.")
