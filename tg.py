@@ -24,8 +24,8 @@ def send_me_message(message):
     print(f"Обработана команда /me от пользователя ID: {message.from_user.id}")
 
 print("Бот запущен.")
-if __name__ == "__main__":
-    def main():
-        bot.polling(none_stop=True, interval=1)
-     
-main()
+
+def main():
+    bot.polling(none_stop=True, interval=1)
+if __name__ == "__main__": 
+    main()
