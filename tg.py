@@ -12,7 +12,7 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 @bot.message_handler(commands=["start"])
 def send_start_message(message):
-    bot.reply_to(message, "Hello world!")
+    bot.reply_to(message, f"Привет, {message.from_user.first_name} {message.from_user.last_name}")
     print(f"Обработана команда /start от пользователя ID: {message.from_user.id}")
 
 
@@ -28,12 +28,22 @@ def send_me_message(message):
     print(f"Обработана команда /me от пользователя ID: {message.from_user.id}")
 
 
+@bot.message_handler(content_types=['text'])
+def send_help1_message(message):
+    if message.text.upper() == 'help' or 'помощь' or 'хелп':
+        bot.reply_to(message, "Тебе тут никто не поможет.")
+        print(f"Обработана команда /help1 от пользователя ID: {message.from_user.id}")
+    
+
 def main():
     bot.polling(none_stop=True, interval=1)
+
+
+print("Бот запущен.")
 
 
 if __name__ == "__main__":
     main()
 
 
-print("Бот запущен.")
+
