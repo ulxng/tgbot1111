@@ -33,7 +33,7 @@ def send_me_message(message):
 
 @bot.message_handler(content_types="text")
 def send_ban_message(message):
-    if not message.text.strip().lower().find("заработок"):
+    if message.text.strip().lower().find("заработок") != -1:
         bot.reply_to(message, "Этобан")
 
 
