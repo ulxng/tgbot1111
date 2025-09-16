@@ -22,7 +22,7 @@ jobs:
       - name: Deploy
         run: |
           set -e
-          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'echo "BOT_TOKEN=$BOT_TOKEN" > $DEPLOY_DIR/.env'
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "echo BOT_TOKEN=$BOT_TOKEN > $DEPLOY_DIR/.env"
           ssh "$DEPLOY_USER@$DEPLOY_HOST" 'cd $DEPLOY_DIR && git fetch origin $BRANCH && git checkout $BRANCH && git pull origin $BRANCH'
         env:
           DEPLOY_USER: ${{ vars.DEPLOY_USER }}
