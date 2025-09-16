@@ -12,14 +12,11 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 @bot.message_handler(commands=["start"])
 def send_start_message(message):
-    if message.from_user.first_name and message.from_user.last_name:
-        bot.send_message( 
-        chat_id=message.chat.id,
-        text=f"Привет, {message.from_user.first_name} {message.from_user.last_name}")
-    elif message.from_user.first_name and not message.from_user.last_name:
-        bot.send_message( 
-        chat_id=message.chat.id,
-        text=f"Привет, {message.from_user.first_name}")  
+    if message.from_user.last_name:
+        user_name = f"{message.from_user.first_name} {message.from_user.last_name}"
+    else:
+        user_name = f"{message.from_user.first_name}"
+    bot.send_message(chat_id=message.chat.id, text=f"Привет, {user_name}")
     print(f"Обработана команда /start от пользователя ID: {message.from_user.id}")
 
 
