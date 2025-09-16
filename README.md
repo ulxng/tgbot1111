@@ -34,7 +34,6 @@
 
 2. Активация виртуального окружения:
 
-`bash`
 `source venv/bin/activate`
 
  После активации вы увидите префикс (venv) в начале строки вашего терминала.
@@ -45,19 +44,21 @@
 
  Выполните команду:
 
- 'pip install -r requirements.txt'
+ `pip install -r requirements.txt`
 
  Если файла requirements.txt нет, вам нужно сначала установить каждую библиотеку вручную, а затем сгенерировать его:
 
-'pip install pyTelegramBotAPI
-pip install python-dotenv 
-pip freeze > requirements.txt'
+`pip install pyTelegramBotAPI`
+
+`pip install python-dotenv`
+
+`pip freeze > requirements.txt`
 
 ### 4. Настройка переменных окружения (для токена бота)
 
 Создайте файл .env в корневой директории проекта и добавьте в него ваш токен бота.
 
-'BOT_TOKEN=7966123957:ABFoNxv6Q6VmGnC2YhkwLj4e1aSkx7tc53A'
+`BOT_TOKEN=7966123957:ABFoNxv6Q6VmGnC2YhkwLj4e1aSkx7tc53A`
 
 Важно: Добавьте .env в файл .gitignore, чтобы случайно не отправить ваш токен в репозиторий.
 
@@ -65,7 +66,7 @@ pip freeze > requirements.txt'
 
 Запустите основной скрипт бота:
 
-'python tg.py'
+`python tg.py`
 
 #### Список команд бота
 
