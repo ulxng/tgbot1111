@@ -1,0 +1,65 @@
+name: Deploy to production
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_mode:
+        description: 'Deploy mode'
+        type: choice
+        options: [host, docker]
+        default: host
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PROD_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p 22 ${{ vars.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy
+        run: |
+          set -e
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "echo BOT_TOKEN=$BOT_TOKEN > $DEPLOY_DIR/.env"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "cd $DEPLOY_DIR && git fetch origin $BRANCH && git checkout $BRANCH && git pull origin $BRANCH"
+        env:
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_DIR: ${{ vars.DEPLOY_DIR }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          BRANCH: ${{ github.ref_name }}
+
+  run_service:
+      needs: deploy
+      runs-on: ubuntu-latest
+      steps:
+        - name: Set up SSH
+          run: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.PROD_SSH_KEY }}" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            ssh-keyscan -p 22 ${{ vars.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+
+        - name: Run service (host)
+          if: ${{ inputs.deploy_mode == 'host' }}
+          run: |
+            ssh "$DEPLOY_USER@$DEPLOY_HOST" "python3 -m venv $DEPLOY_DIR/venv || true"
+            ssh "$DEPLOY_USER@$DEPLOY_HOST" "$DEPLOY_DIR/venv/bin/pip install -U pip && $DEPLOY_DIR/venv/bin/pip install -r $DEPLOY_DIR/requirements.txt"
+            ssh "$DEPLOY_USER@$DEPLOY_HOST" "pkill -f $DEPLOY_DIR/venv/bin/python\ $DEPLOY_DIR/tg.py || true"
+            ssh "$DEPLOY_USER@$DEPLOY_HOST" "nohup $DEPLOY_DIR/venv/bin/python $DEPLOY_DIR/tg.py > $DEPLOY_DIR/app.log 2>&1 &"
+          env:
+            DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+            DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+            DEPLOY_DIR:  ${{ vars.DEPLOY_DIR }}
+
+        - name: Run service (docker)
+          if: ${{ inputs.deploy_mode == 'docker' }}
+          run: |
+            ssh "$DEPLOY_USER@$DEPLOY_HOST" "cd $DEPLOY_DIR && docker compose up -d --remove-orphans"
+          env:
+            DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+            DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+            DEPLOY_DIR:  ${{ vars.DEPLOY_DIR }}
