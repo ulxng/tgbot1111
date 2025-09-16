@@ -1,8 +1,8 @@
 certifi==2025.8.3
 charset-normalizer==3.4.3
 idna==3.10
-pyTelegramBotAPI==4.29.1
-python-dotenv==1.1.1
-requests==2.32.5
+pyTelegramBotAPI==4.23.0
+python-dotenv==1.0.1
+requests==2.32.4
 telebot==0.0.5
-urllib3==2.5.0
+urllib3==2.2.3
