@@ -11,7 +11,7 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 
 def log_command(command_name, user_id):
-    print(f"Обработана команда {command_name} от пользователя {user_id}")
+    print(f"Обработана команда /{command_name} от пользователя {user_id}")
 
 
 @bot.message_handler(commands=["start"])
