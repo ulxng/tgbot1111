@@ -18,8 +18,8 @@
 
 Если вы клонируете код из Git-репозитория, перейдите в директорию проекта после клонирования.
 
-'git clone https://github.com/Anri27/tgbot1111
-cd \tgbot'
+`git clone https://github.com/Anri27/tgbot1111`
+`cd \tgbot`
 
 ### 2. Создание и активация виртуального окружения
 
@@ -27,7 +27,7 @@ cd \tgbot'
 
 1. Создание виртуального окружения:
 
-'python3 -m venv venv'
+`python3 -m venv venv`
 
 Эта команда создаст папку venv в директории вашего проекта.
 
