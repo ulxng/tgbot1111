@@ -17,13 +17,13 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.PROD_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p 22 ${{ secrets.PROD_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p 22 ${{ vars.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy
         run: |
           set -e
-          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'cd $DEPLOY_DIR && git fetch origin $BRANCH && git checkout $BRANCH && git pull origin $BRANCH'
           ssh "$DEPLOY_USER@$DEPLOY_HOST" 'echo "BOT_TOKEN=$BOT_TOKEN" > $DEPLOY_DIR/.env'
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'cd $DEPLOY_DIR && git fetch origin $BRANCH && git checkout $BRANCH && git pull origin $BRANCH'
         env:
           DEPLOY_USER: ${{ vars.DEPLOY_USER }}
           DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
