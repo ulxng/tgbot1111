@@ -17,7 +17,7 @@
 ### 1. Клонирование репозитория (если код находится в Git)
 
 Если вы клонируете код из Git-репозитория, перейдите в директорию проекта после клонирования.
-```bash
+
 'git clone https://github.com/Anri27/tgbot1111
 cd \tgbot'
 
@@ -56,7 +56,7 @@ pip freeze > requirements.txt'
 
 Создайте файл .env в корневой директории проекта и добавьте в него ваш токен бота.
 
-'BOT_TOKEN=7966123957:AAFoNxv7Q6VmGnC2YhkwLj4e1aSkx7tc69A'
+'BOT_TOKEN=7966123957:ABFoNxv6Q6VmGnC2YhkwLj4e1aSkx7tc53A'
 
 Важно: Добавьте .env в файл .gitignore, чтобы случайно не отправить ваш токен в репозиторий.
 
