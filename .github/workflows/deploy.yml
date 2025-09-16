@@ -22,11 +22,11 @@ jobs:
       - name: Deploy
         run: |
           set -e
-          ssh "$PROD_USER@$PROD_HOST" 'cd $DEPLOY_DIR && git fetch origin $BRANCH && git checkout $BRANCH && git pull origin $BRANCH'
-          ssh "$PROD_USER@$PROD_HOST" 'echo "BOT_TOKEN=$BOT_TOKEN" > $DEPLOY_DIR/.env'
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'cd $DEPLOY_DIR && git fetch origin $BRANCH && git checkout $BRANCH && git pull origin $BRANCH'
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'echo "BOT_TOKEN=$BOT_TOKEN" > $DEPLOY_DIR/.env'
         env:
-          PROD_USER: ${{ secrets.PROD_USER }}
-          PROD_HOST: ${{ secrets.PROD_HOST }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
           DEPLOY_DIR: ${{ vars.DEPLOY_DIR }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           BRANCH:    ${{ github.event.inputs.branch }}
